@@ -1,0 +1,36 @@
+name: Build PDF
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Compile notice.tex
+      uses: xu-cheng/latex-action@v2
+      with:
+        root_file: notice.tex
+
+    - name: Compile cards.tex
+      uses: xu-cheng/latex-action@v2
+      with:
+        root_file: cards.tex
+
+    - name: Compile scoring.tex
+      uses: xu-cheng/latex-action@v2
+      with:
+        root_file: scoring.tex
+
+    - name: Upload PDFs
+      uses: actions/upload-artifact@v2
+      with:
+        name: PDFs
+        path: |
+          *.pdf
